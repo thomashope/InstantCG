@@ -11,7 +11,7 @@ all: instantcg helloWorld
 
 # compile InstantCG as an .o file
 instantcg:
-	$(CC) -o $(BUILD)instantcg.o -c instantcg.cpp
+	$(CC) -c instantcg.cpp -o $(BUILD)instantcg.o
 
 # compile an example and link it with instant cg
 helloWorld: $(EXAMP)helloWorld.cpp

@@ -29,3 +29,69 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #include "instantcg.h"
+
+namespace InstantCG
+{
+
+////////////////////////////////////////////////////////////////////////////////
+//VARIABLES/////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+int w; //width of the screen
+int h; //height of the screen
+SDL_Window*   win; //The window
+SDL_Renderer* ren; //The renderer
+
+SDL_Event event = {0};
+
+////////////////////////////////////////////////////////////////////////////////
+//BASIC SCREEN FUNCTIONS////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+//The screen function: sets up the window for 32-bit color graphics.
+//Creates a graphical screen of width*height pixels in 32-bit color.
+//Set fullscreen to 0 for a window, or to 1 for fullscreen output
+//text is the caption or title of the window
+//also inits SDL
+void screen(int width, int height, bool fullscreen, const std::string& text)
+{
+	w = width;
+	h = height;
+
+
+	// TODO: add fullscreen option
+	// TODO: add error handeling
+	SDL_Init(SDL_INIT_EVERYTHING);
+	win = SDL_CreateWindow(text.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, w, h, SDL_WINDOW_SHOWN);
+	ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//NON GRAPHICAL FUNCTIONS///////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+//Returns 1 if you close the window or press the escape key. Also handles everything thats needed per frame.
+bool done(bool quit_if_esc, bool delay)
+{
+	if (delay) SDL_Delay(5); //So it consumes less processing power
+	while (SDL_PollEvent(&event))
+	{
+		if (event.type == SDL_QUIT) return true;
+		if (quit_if_esc &&
+			event.type == SDL_KEYDOWN &&
+			event.key.keysym.sym == SDLK_ESCAPE) return true;
+	}
+	return false;
+}
+
+//Ends the program
+void end()
+{
+	SDL_Quit();
+	std::exit(1);
+}
+
+} // end of namespace InstantCG
+
+
+
