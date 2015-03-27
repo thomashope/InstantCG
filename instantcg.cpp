@@ -74,6 +74,11 @@ void redraw()
 {
     SDL_RenderPresent(ren);
 }
+void cls(const ColorRGB& color)
+{
+    SDL_SetRenderDrawColor(ren, color.r, color.g, color.b, 255);
+    SDL_RenderClear(ren);
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 //NON GRAPHICAL FUNCTIONS///////////////////////////////////////////////////////

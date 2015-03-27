@@ -5,13 +5,15 @@ int main()
 {
 
 	screen(256, 256, false, "Hello World!");
+    ColorRGB bgColor;
 
 	while( !done() )
 	{
+        bgColor.r = std::rand()&0xff;
+        bgColor.g = std::rand()&0xff;
+        bgColor.b = std::rand()&0xff;
 
-
-		SDL_SetRenderDrawColor(ren, std::rand()&0xff, std::rand()&0xff, std::rand()&0xff, 255);
-    	SDL_RenderClear(ren);
+        cls( bgColor );
         redraw();
 	}
 

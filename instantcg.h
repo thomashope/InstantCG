@@ -135,6 +135,7 @@ extern SDL_Renderer* ren;
 
 void screen(int width = 640, int height = 400, bool fullscreen = false, const std::string& text = " ");
 void redraw();
+void cls(const ColorRGB& color = RGB_Black);
 
 ////////////////////////////////////////////////////////////////////////////////
 //NON GRAPHICAL FUNCTIONS///////////////////////////////////////////////////////
@@ -142,8 +143,8 @@ void redraw();
 
 bool done(bool quit_if_esc = true, bool delay = true);
 void end();
-inline unsigned long getTicks() { return SDL_GetTicks(); }
-inline double getTime() { return SDL_GetTicks() / 1000.0; }
+inline unsigned long getTicks() { return SDL_GetTicks(); } // milliseconds since SDL was initialised
+inline double getTime() { return SDL_GetTicks() / 1000.0; } // seconds since SDL was initialised
 
 } // end of namespace InstantCG
 
