@@ -12,8 +12,7 @@ int main()
 
 		SDL_SetRenderDrawColor(ren, std::rand()&0xff, std::rand()&0xff, std::rand()&0xff, 255);
     	SDL_RenderClear(ren);
-		SDL_RenderPresent(ren);
-
+        redraw();
 	}
 
 	return 0;
