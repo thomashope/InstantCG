@@ -1,13 +1,14 @@
-//
-// InstantCG is a derivative work of QuickCG by Thomas Hope.
-// The aim is for InstantCG to be a drop in replacement for QuickCG using SDL2
-// and to build on QuickCG to include functionality that is only availible in
-// SDL2.
-//
-// The below legal notice is preserved from the original QuickCG
-//
-
 /*
+
+InstantCG 20150330
+
+InstantCG is a derivative work of QuickCG by Thomas Hope.
+The aim is for InstantCG to be a drop in replacement for QuickCG using SDL2
+and to build on QuickCG to include functionality that is only availible in
+SDL2.
+
+The below legal notice is preserved from the original QuickCG
+
 QuickCG 20071121
 
 Copyright (c) 2004-2007, Lode Vandevenne
