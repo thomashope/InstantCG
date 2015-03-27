@@ -146,6 +146,16 @@ void end();
 inline unsigned long getTicks() { return SDL_GetTicks(); } // milliseconds since SDL was initialised
 inline double getTime() { return SDL_GetTicks() / 1000.0; } // seconds since SDL was initialised
 
+////////////////////////////////////////////////////////////////////////////////
+//2D SHAPES/////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+void horLine(int y, int x1, int x2, const ColorRGB& color); // draws a horizontal line
+void verLine(int x, int y1, int y2, const ColorRGB& color); // draws a verticle line
+void drawLine(int x1, int y1, int x2, int y2, const ColorRGB& color); // draws a line
+inline void line(int x1, int y1, int x2, int y2, const ColorRGB& color) // shortcut for drawLine()
+{ drawLine(x1, y1, x2, y2, color); }
+
 } // end of namespace InstantCG
 
 #endif
