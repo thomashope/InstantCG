@@ -142,6 +142,8 @@ void redraw();
 
 bool done(bool quit_if_esc = true, bool delay = true);
 void end();
+inline unsigned long getTicks() { return SDL_GetTicks(); }
+inline double getTime() { return SDL_GetTicks() / 1000.0; }
 
 } // end of namespace InstantCG
 
