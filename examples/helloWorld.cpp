@@ -16,7 +16,7 @@ int main()
         
         horLine(128, 0, 255, RGB_White);
         verLine(128, 0, 255, RGB_White);
-        line(0, 0, 255, 255,  RGB_Black);
+        line(0, 0, 255, 255, RGB_Black);
 
         redraw();
 	}
