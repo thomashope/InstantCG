@@ -124,8 +124,8 @@ struct ColorHSV
 //GLOBAL VARIABLES//////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-extern int w;
-extern int h;
+extern int w;               // the width of the window
+extern int h;               // the height of the window
 extern SDL_Window*   win;
 extern SDL_Renderer* ren;
 
@@ -134,17 +134,17 @@ extern SDL_Renderer* ren;
 ////////////////////////////////////////////////////////////////////////////////
 
 void screen(int width = 640, int height = 400, bool fullscreen = false, const std::string& text = " ");
-void redraw();
-void cls(const ColorRGB& color = RGB_Black);
-bool onScreen(int x, int y);
+void redraw();                               // updates the visible display
+void cls(const ColorRGB& color = RGB_Black); // clears the screen to the given color
+bool onScreen(int x, int y);                 // True if the given coords are inside the screen
 
 ////////////////////////////////////////////////////////////////////////////////
 //NON GRAPHICAL FUNCTIONS///////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
 bool done(bool quit_if_esc = true, bool delay = true);
-void end();
-inline unsigned long getTicks() { return SDL_GetTicks(); } // milliseconds since SDL was initialised
+void end();                                                 // quits the program
+inline unsigned long getTicks() { return SDL_GetTicks(); }  // milliseconds since SDL was initialised
 inline double getTime() { return SDL_GetTicks() / 1000.0; } // seconds since SDL was initialised
 
 ////////////////////////////////////////////////////////////////////////////////
