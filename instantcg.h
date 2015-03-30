@@ -67,6 +67,16 @@ namespace InstantCG
      return val;
  }
 
+//length is decimal precision of the floating point number
+template<typename T>
+std::string valtostr(const T& val, int length, bool fixed = true)
+{
+  std::ostringstream sstream;
+  if(fixed) sstream << std::fixed;
+  sstream << std::setprecision(length) << val;
+  return sstream.str();
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 //COLOR STRUCTS/////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
