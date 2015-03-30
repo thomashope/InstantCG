@@ -7,8 +7,6 @@ The aim is for InstantCG to be a drop in replacement for QuickCG using SDL2
 and to build on QuickCG to include functionality that is only availible in
 SDL2.
 
-You can find more about InstantCG https://github.com/Cyphre117/InstantCG
-
 The below legal notice is preserved from the original QuickCG
 
 QuickCG 20071121
@@ -80,6 +78,10 @@ void cls(const ColorRGB& color)
 {
     SDL_SetRenderDrawColor(ren, color.r, color.g, color.b, 255);
     SDL_RenderClear(ren);
+}
+bool onScreen(int x, int y)
+{
+    return (x >= 0 && y >= 0 && x < w && y < h);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

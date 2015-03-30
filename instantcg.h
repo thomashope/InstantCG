@@ -7,8 +7,6 @@ The aim is for InstantCG to be a drop in replacement for QuickCG using SDL2
 and to build on QuickCG to include functionality that is only availible in
 SDL2.
 
-You can find more about InstantCG https://github.com/Cyphre117/InstantCG
-
 The below legal notice is preserved from the original QuickCG
 
 QuickCG 20071121
@@ -138,6 +136,7 @@ extern SDL_Renderer* ren;
 void screen(int width = 640, int height = 400, bool fullscreen = false, const std::string& text = " ");
 void redraw();
 void cls(const ColorRGB& color = RGB_Black);
+bool onScreen(int x, int y);
 
 ////////////////////////////////////////////////////////////////////////////////
 //NON GRAPHICAL FUNCTIONS///////////////////////////////////////////////////////
