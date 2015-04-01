@@ -1,6 +1,6 @@
 /*
 
-InstantCG 20150330
+InstantCG 20150401
 
 InstantCG is a derivative work of QuickCG by Thomas Hope.
 The aim is for InstantCG to be a drop in replacement for QuickCG using SDL2
@@ -187,7 +187,7 @@ inline double getTime() { return SDL_GetTicks() / 1000.0; } // seconds since SDL
 
 void horLine(int y, int x1, int x2, const ColorRGB& color); // draws a horizontal line
 void verLine(int x, int y1, int y2, const ColorRGB& color); // draws a verticle line
-void drawLine(int x1, int y1, int x2, int y2, const ColorRGB& color); // draws a line
+void drawLine(int x1, int y1, int x2, int y2, const ColorRGB& color);   // draws a line
 inline void line(int x1, int y1, int x2, int y2, const ColorRGB& color) // shortcut for drawLine()
 { drawLine(x1, y1, x2, y2, color); }
 

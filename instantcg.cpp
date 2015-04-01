@@ -1,6 +1,6 @@
 /*
 
-InstantCG 20150330
+InstantCG 20150401
 
 InstantCG is a derivative work of QuickCG by Thomas Hope.
 The aim is for InstantCG to be a drop in replacement for QuickCG using SDL2
