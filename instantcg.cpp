@@ -121,8 +121,7 @@ bool done(bool quit_if_esc, bool delay)
 	{
 		if (event.type == SDL_QUIT) return true;
 		if (quit_if_esc &&
-			event.type == SDL_KEYDOWN &&
-			event.key.keysym.sym == SDLK_ESCAPE) return true;
+			keyDown(SDL_SCANCODE_ESCAPE)) return true;
 	}
 	return false;
 }
