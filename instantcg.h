@@ -164,6 +164,13 @@ extern SDL_Window*   win;
 extern SDL_Renderer* ren;
 
 ////////////////////////////////////////////////////////////////////////////////
+//KEYBOARD FUNCTIONS////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+bool keyDown(int key);  // checks if the key is held down, true as long as the key is held
+void readKeys();        // gets the current state of the keyboard
+
+////////////////////////////////////////////////////////////////////////////////
 //BASIC SCREEN FUNCTIONS////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -178,7 +185,6 @@ bool onScreen(int x, int y);                 // True if the given coords are ins
 
 bool done(bool quit_if_esc = true, bool delay = true);
 void end();                                                 // quits the program
-void readkeys();                                            // gets the current state of the keyboard
 inline unsigned long getTicks() { return SDL_GetTicks(); }  // milliseconds since SDL was initialised
 inline double getTime() { return SDL_GetTicks() / 1000.0; } // seconds since SDL was initialised
 
