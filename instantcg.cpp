@@ -54,15 +54,20 @@ SDL_Event event = {0};
 //KEYBOARD FUNCTIONS////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-bool keyDown(int key)
-{
-    return (inkeys[key] != 0);
-}
-
 //Gives value of pressed keys to inkeys
 void readKeys()
 {
     inkeys = SDL_GetKeyboardState(NULL);
+}
+
+bool keyDown(SDL_Keycode key)
+{
+    return (inkeys[SDL_GetScancodeFromKey(key)] != 0);
+}
+
+bool keyDown(SDL_Scancode key)
+{
+    return (inkeys[key] != 0);
 }
 
 

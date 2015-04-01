@@ -167,7 +167,8 @@ extern SDL_Renderer* ren;
 //KEYBOARD FUNCTIONS////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-bool keyDown(int key);  // checks if the key is held down, true as long as the key is held
+bool keyDown(SDL_Keycode key);   // checks if the key is held down, true as long as the key is held
+bool keyDown(SDL_Scancode key);  // checks if the key is held down, true as long as the key is held
 void readKeys();        // gets the current state of the keyboard
 
 ////////////////////////////////////////////////////////////////////////////////
