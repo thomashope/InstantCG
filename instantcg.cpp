@@ -60,11 +60,13 @@ void readKeys()
     inkeys = SDL_GetKeyboardState(NULL);
 }
 
+//Converts keycodes to the layout independent scancodes
 bool keyDown(SDL_Keycode key)
 {
     return (inkeys[SDL_GetScancodeFromKey(key)] != 0);
 }
 
+//Scancodes don't move even if the user has a different keyboard layout
 bool keyDown(SDL_Scancode key)
 {
     return (inkeys[key] != 0);
