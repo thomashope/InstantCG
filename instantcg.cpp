@@ -74,7 +74,6 @@ bool keyDown(SDL_Scancode key)
     return (inkeys[key] != 0);
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////
 //BASIC SCREEN FUNCTIONS////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -159,6 +158,12 @@ void drawLine(int x1, int y1, int x2, int y2, const ColorRGB& color)
 {
 	SDL_SetRenderDrawColor(ren, color.r, color.g, color.b, 255);
 	SDL_RenderDrawLine(ren, x1, y1, x2, y2); 
+}
+void drawRect(int x1, int y1, int x2, int y2, const ColorRGB& color)
+{
+	SDL_SetRenderDrawColor(ren, color.r, color.g, color.b, 255);
+    SDL_Rect r = {x1, y1, x2, y2};
+    SDL_RenderFillRect(ren, &r);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

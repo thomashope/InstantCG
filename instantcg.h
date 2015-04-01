@@ -198,6 +198,7 @@ void verLine(int x, int y1, int y2, const ColorRGB& color); // draws a verticle 
 void drawLine(int x1, int y1, int x2, int y2, const ColorRGB& color);   // draws a line
 inline void line(int x1, int y1, int x2, int y2, const ColorRGB& color) // shortcut for drawLine()
 { drawLine(x1, y1, x2, y2, color); }
+void drawRect(int x1, int y1, int x2, int y2, const ColorRGB& color);
 
 } // end of namespace InstantCG
 

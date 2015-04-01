@@ -18,9 +18,10 @@ int main()
         verLine(128, 0, 255, RGB_White);
         line(0, 0, 255, 255, RGB_Black);
 
-        if (keyDown(SDL_SCANCODE_SPACE))
+        if (keyDown(SDLK_SPACE))
         {
             cls(RGB_Black);
+            drawRect(0, 0, 20, 40, RGB_Blue);
         }
         
         redraw();
