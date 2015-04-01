@@ -47,6 +47,7 @@ int h; //height of the screen
 SDL_Window*   win; //The window
 SDL_Renderer* ren; //The renderer
 
+Uint8* inkeys;
 SDL_Event event = {0};
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -74,11 +75,13 @@ void redraw()
 {
     SDL_RenderPresent(ren);
 }
+
 void cls(const ColorRGB& color)
 {
     SDL_SetRenderDrawColor(ren, color.r, color.g, color.b, 255);
     SDL_RenderClear(ren);
 }
+
 bool onScreen(int x, int y)
 {
     return (x >= 0 && y >= 0 && x < w && y < h);
@@ -92,6 +95,7 @@ bool onScreen(int x, int y)
 bool done(bool quit_if_esc, bool delay)
 {
 	if (delay) SDL_Delay(5); //So it consumes less processing power
+    readKeys();
 	while (SDL_PollEvent(&event))
 	{
 		if (event.type == SDL_QUIT) return true;
@@ -109,6 +113,13 @@ void end()
 	SDL_DestroyWindow(win);
 	SDL_Quit();
 	std::exit(1);
+}
+
+//Gives value of pressed keys to inkeys
+////
+void readKeys()
+{
+    inkeys = SDL_GetKeyState(NULL);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
