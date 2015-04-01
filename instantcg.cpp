@@ -60,6 +60,8 @@ void readKeys()
     inkeys = SDL_GetKeyboardState(NULL);
 }
 
+// visit https://wiki.libsdl.org/CategoryKeyboard for description of scancodes vs keycodes
+
 //Converts keycodes to the layout independent scancodes
 bool keyDown(SDL_Keycode key)
 {
