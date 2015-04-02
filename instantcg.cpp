@@ -103,6 +103,7 @@ void screen(int width, int height, bool fullscreen, const std::string& text)
 
   // TODO: consider swapping this for a SDL_Surface to enable getting pixel data
   // or ignore the renderer altogether and draw straigt to the window surface
+  // or use SDL_RenderReadPixels
   scr = SDL_CreateTexture(ren, SDL_GetWindowPixelFormat(win), SDL_TEXTUREACCESS_STREAMING, w, h);
 }
 void redraw()
@@ -146,8 +147,6 @@ void drawBuffer(Uint32* buffer)
         (buffer[(x*h)+y] >> 8 ) & 0xff,
         (buffer[(x*h)+y]      ) & 0xff,
         255);
-
-      //SDL_SetRenderDrawColor(ren, 255, 0, 255, 255);
 
       point.x = x;
       point.y = y;
