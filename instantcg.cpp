@@ -50,6 +50,10 @@ SDL_Renderer* ren; //The renderer
 const Uint8* inkeys;
 SDL_Event event = {0};
 
+SDL_Texture* scr;
+void* scr_pixels;
+int   scr_pitch;
+
 ////////////////////////////////////////////////////////////////////////////////
 //KEYBOARD FUNCTIONS////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -88,12 +92,18 @@ void screen(int width, int height, bool fullscreen, const std::string& text)
 	w = width;
 	h = height;
 
-
 	// TODO: add fullscreen option
 	// TODO: add error handeling
 	SDL_Init(SDL_INIT_EVERYTHING);
 	win = SDL_CreateWindow(text.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, w, h, SDL_WINDOW_SHOWN);
+  if (win == NULL) { std::cout << "Window error: " << SDL_GetError() << std::endl; }
+
 	ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+  if (ren == NULL) { std::cout << "Renderer error: " << SDL_GetError() << std::endl; }
+
+  // TODO: consider swapping this for a SDL_Surface to enable getting pixel data
+  // or ignore the renderer altogether and draw straigt to the window surface
+  scr = SDL_CreateTexture(ren, SDL_GetWindowPixelFormat(win), SDL_TEXTUREACCESS_STREAMING, w, h);
 }
 void redraw()
 {
@@ -109,6 +119,46 @@ void cls(const ColorRGB& color)
 bool onScreen(int x, int y)
 {
     return (x >= 0 && y >= 0 && x < w && y < h);
+}
+
+void drawBuffer(Uint32* buffer)
+{
+  /*
+  if (SDL_GetWindowSurface(win) == NULL)
+  { std::cout << "Window error: " << SDL_GetError() << std::endl; }
+
+  SDL_LockTexture(scr, NULL, &scr_pixels, &scr_pitch);
+  */
+  SDL_Point point;
+  for (int y = 0; y < h; y++)
+  {
+    for (int x = 0; x < w; x++)
+    {
+      //TODO: get this working so it writes properly
+      /*
+      ((Uint32*)scr_pixels)[y * w + x] = SDL_MapRGB(&format,
+                                                  (buffer[y*w+x] & 0xff0000) >> 16,
+                                                  (buffer[y*w+x] & 0x00ff00) >> 8,
+                                                  (buffer[y*w+x] & 0x0000ff));
+      */
+      SDL_SetRenderDrawColor(ren,
+        (buffer[(x*h)+y] >> 16) & 0xff,
+        (buffer[(x*h)+y] >> 8 ) & 0xff,
+        (buffer[(x*h)+y]      ) & 0xff,
+        255);
+
+      //SDL_SetRenderDrawColor(ren, 255, 0, 255, 255);
+
+      point.x = x;
+      point.y = y;
+      SDL_RenderDrawPoints(ren, &point, 1);
+    }
+  }
+
+  /*
+  SDL_UnlockTexture(scr);
+  SDL_RenderCopy(ren, scr, NULL, NULL);
+  */
 }
 
 ////////////////////////////////////////////////////////////////////////////////

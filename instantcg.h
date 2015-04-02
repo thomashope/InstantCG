@@ -179,6 +179,7 @@ void screen(int width = 640, int height = 400, bool fullscreen = false, const st
 void redraw();                               // updates the visible display
 void cls(const ColorRGB& color = RGB_Black); // clears the screen to the given color
 bool onScreen(int x, int y);                 // True if the given coords are inside the screen
+void drawBuffer(Uint32* buffer);             // Draws an array of pixel data to the screen
 
 ////////////////////////////////////////////////////////////////////////////////
 //NON GRAPHICAL FUNCTIONS///////////////////////////////////////////////////////
