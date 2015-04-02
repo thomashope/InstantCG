@@ -176,10 +176,11 @@ void readKeys();        // gets the current state of the keyboard
 ////////////////////////////////////////////////////////////////////////////////
 
 void screen(int width = 640, int height = 400, bool fullscreen = false, const std::string& text = " ");
-void redraw();                               // updates the visible display
-void cls(const ColorRGB& color = RGB_Black); // clears the screen to the given color
-bool onScreen(int x, int y);                 // True if the given coords are inside the screen
-void drawBuffer(Uint32* buffer);             // Draws an array of pixel data to the screen
+void redraw();                                  // Updates the visible display
+void cls(const ColorRGB& color = RGB_Black);    // Clears the screen to the given color
+void pset(int x, int y, const ColorRGB& color); // Sets a single pixel color
+bool onScreen(int x, int y);                    // True if the given coords are inside the screen
+void drawBuffer(Uint32* buffer);                // Draws an array of pixel data to the screen
 
 ////////////////////////////////////////////////////////////////////////////////
 //NON GRAPHICAL FUNCTIONS///////////////////////////////////////////////////////

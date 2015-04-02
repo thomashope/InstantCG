@@ -117,6 +117,12 @@ void cls(const ColorRGB& color)
     SDL_RenderClear(ren);
 }
 
+void pset(int x, int y, const ColorRGB& color)
+{
+  SDL_SetRenderDrawColor(ren, color.r, color.g, color.b, 255);
+  SDL_RenderDrawPoint(ren, x, y);
+}
+
 bool onScreen(int x, int y)
 {
     return (x >= 0 && y >= 0 && x < w && y < h);
