@@ -1,6 +1,8 @@
 #include "InstantCG.h"
 using namespace InstantCG;
 
+// THIS CODE IS COPIED DIRECTLY FROM http://lodev.org/cgtutor/fire.html
+
 //define the width and height of the screen and the buffers
 const int screenWidth = 640;
 const int screenHeight = 128;
