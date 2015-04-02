@@ -164,6 +164,21 @@ void drawBuffer(Uint32* buffer)
 //NON GRAPHICAL FUNCTIONS///////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+// spins untill frameDuration has passed
+void waitFrame(double oldTime, double frameDuration) //in seconds
+{
+  float time = getTime();
+  while(time - oldTime < frameDuration)
+  {
+    time = getTime();
+    SDL_PollEvent(&event);
+    if(event.type == SDL_QUIT) end();
+    readKeys();
+    if(inkeys[SDL_SCANCODE_ESCAPE]) end();
+    SDL_Delay(5); //so it consumes less processing power
+  }
+}
+
 //Returns 1 if you close the window or press the escape key. Also handles everything thats needed per frame.
 bool done(bool quit_if_esc, bool delay)
 {

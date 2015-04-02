@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
   {
     //timing: set to maximum 50 milliseconds per frame = 20 frames per second
     oldTime = time;
-    //waitFrame(oldTime, 0.05);
+    waitFrame(oldTime, 0.05);
     time = getTime();
     
     //randomize the bottom row of the fire buffer
