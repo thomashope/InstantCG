@@ -164,6 +164,21 @@ void drawBuffer(Uint32* buffer)
 //NON GRAPHICAL FUNCTIONS///////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+// pauses the program until you press a key
+void sleep()
+{
+  bool done = false;
+  while(done == false)
+  {
+    while(SDL_PollEvent(&event))
+    {
+      if (event.type == SDL_QUIT) end();
+      if (event.type == SDL_KEYDOWN) done = true;
+    }
+    SDL_Delay(5);
+  }
+}
+
 // spins untill frameDuration has passed
 void waitFrame(double oldTime, double frameDuration) //in seconds
 {

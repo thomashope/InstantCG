@@ -185,6 +185,7 @@ void drawBuffer(Uint32* buffer);             // Draws an array of pixel data to 
 //NON GRAPHICAL FUNCTIONS///////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+void sleep();
 void waitFrame(double oldTime, double frameDuration); //in seconds
 bool done(bool quit_if_esc = true, bool delay = true);
 void end();                                                 // quits the program
