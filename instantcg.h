@@ -200,6 +200,17 @@ inline void line(int x1, int y1, int x2, int y2, const ColorRGB& color) // short
 { drawLine(x1, y1, x2, y2, color); }
 void drawRect(int x1, int y1, int x2, int y2, const ColorRGB& color);
 
+////////////////////////////////////////////////////////////////////////////////
+//COLOR CONVERSIONS/////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+ColorHSL RGBtoHSL(const ColorRGB& colorRGB);
+ColorRGB HSLtoRGB(const ColorHSL& colorHSL);
+ColorHSV RGBtoHSV(const ColorRGB& colorRGB);
+ColorRGB HSVtoRGB(const ColorHSV& colorHSV);
+Uint32 RGBtoINT(const ColorRGB& colorRGB);
+ColorRGB INTtoRGB(Uint32 colorINT);
+
+
 } // end of namespace InstantCG
 
 #endif
