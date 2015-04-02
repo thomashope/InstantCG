@@ -1,9 +1,11 @@
 #include "InstantCG.h"
 using namespace InstantCG;
 
+// THIS IS ALL TAKEN FROM http://lodev.org
+
 int main(int argc, char *argv[]) 
 { 
-    screen(256, 256, 0, "The XOR Texture"); 
+    screen(256, 256, 0, "Texture Examples"); 
    
     // black and white XOR texture
     for(int x = 0; x < w; x++) 
@@ -27,6 +29,17 @@ int main(int argc, char *argv[])
          pset(x, y, color);
     }
       
+    // and a bit of a triangle
+    redraw();
+    sleep();
+
+    cls();
+
+    for(int x = 0; x < w; x++)
+    for(int y = 0; y < h; y++)
+    {
+        if(x & y) pset(x, y, RGB_White);
+    }    
     redraw();
     sleep();
 
