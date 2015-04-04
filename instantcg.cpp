@@ -92,13 +92,16 @@ void screen(int width, int height, bool fullscreen, const std::string& text)
 	w = width;
 	h = height;
 
+  Uint32 windowFlags = SDL_WINDOW_SHOWN;
+  if (fullscreen) windowFlags |= SDL_WINDOW_FULLSCREEN;
+
 	// TODO: add fullscreen option
 	// TODO: add error handeling
 	SDL_Init(SDL_INIT_EVERYTHING);
-	win = SDL_CreateWindow(text.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, w, h, SDL_WINDOW_SHOWN);
+	win = SDL_CreateWindow(text.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, w, h, windowFlags);
   if (win == NULL) { std::cout << "Window error: " << SDL_GetError() << std::endl; SDL_Quit(); std::exit(1);}
 
-	ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+	ren = SDL_CreateRenderer(win, -1, 0 );//SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
   if (ren == NULL) { std::cout << "Renderer error: " << SDL_GetError() << std::endl; SDL_Quit(); std::exit(1); }
 
   // TODO: consider swapping this for a SDL_Surface to enable getting pixel data
@@ -130,9 +133,9 @@ bool onScreen(int x, int y)
 
 void drawBuffer(Uint32* buffer)
 {
-  ///*
+  /*
   if (SDL_GetWindowSurface(win) == NULL)
-  { std::cout << "Window error: " << SDL_GetError() << std::endl; }
+  { std::cout << "drawBuffer error: " << SDL_GetError() << std::endl; end(); }
 
   SDL_PixelFormat* format = SDL_GetWindowSurface(win)->format;
 
@@ -145,14 +148,14 @@ void drawBuffer(Uint32* buffer)
     for (int x = 0; x < w; x++)
     {
       //TODO: get this working so it writes properly
-      //*
+      /*
       ((Uint32*)scr_pixels)[y * w + x] = SDL_MapRGB(format,
                                                   (buffer[y*w+x] >> 16) & 0xff,
                                                   (buffer[y*w+x] >>  8) & 0xff,
                                                    buffer[y*w+x]        & 0xff );
       //*/
       
-      /*
+      //*
       SDL_SetRenderDrawColor(ren,
         (buffer[(x*h)+y] >> 16) & 0xff,
         (buffer[(x*h)+y] >>  8) & 0xff,
@@ -162,11 +165,11 @@ void drawBuffer(Uint32* buffer)
       point.x = x;
       point.y = y;
       SDL_RenderDrawPoints(ren, &point, 1);
-      */
+      //*/
     }
   }
 
-  //*
+  /*
   SDL_UnlockTexture(scr);
   SDL_RenderCopy(ren, scr, NULL, NULL);
   //*/

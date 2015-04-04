@@ -3,6 +3,7 @@ using namespace InstantCG;
 
 #define dist(a, b, c, d) sqrt(double((a - c) * (a - c) + (b - d) * (b - d)))
 
+/*
 int main(int argc, char *argv[])
 {
     screen(256, 256, 0, "Plasma");
@@ -26,8 +27,9 @@ int main(int argc, char *argv[])
     }
     return(0);
 }
+*/
 
-/*
+
 #define screenWidth 256
 #define screenHeight 256
 
@@ -85,4 +87,3 @@ int main(int argc, char *argv[])
 
     return(0);
 }
-*/
