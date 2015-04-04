@@ -39,7 +39,7 @@ int palette[256];
 	
 int main(int argc, char *argv[])
 {
-	screen(screenWidth, screenHeight, true, "Plasma");
+	screen(screenWidth, screenHeight, false, "Plasma");
    
     //generate the palette
     ColorRGB colorRGB;
