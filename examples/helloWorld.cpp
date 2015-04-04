@@ -8,7 +8,7 @@ int main()
 {
 
 	screen(256, 256, false, "Hello World!");
-    ColorRGB bgColor;
+    ColorRGB bgColor, sample;
 
 	while( !done() )
 	{
@@ -32,6 +32,11 @@ int main()
             getMouseState(mouseX, mouseY);
 
             std::cout << "mouse: " << mouseX << ", " << mouseY << std::endl;
+
+            sample = pget(mouseX, mouseY);
+
+            drawRect(0, 0, 24, 44, RGB_Black);
+            drawRect(0, 0, 20, 40, sample);
         }
 
         redraw();

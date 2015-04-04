@@ -50,9 +50,7 @@ SDL_Renderer* ren; //The renderer
 const Uint8* inkeys;
 SDL_Event event = {0};
 
-SDL_Texture* scr;
-void* scr_pixels;
-int   scr_pitch;
+SDL_Texture* scr; // used in drawBuffer()
 
 ////////////////////////////////////////////////////////////////////////////////
 //KEYBOARD FUNCTIONS////////////////////////////////////////////////////////////
@@ -108,9 +106,6 @@ void screen(int width, int height, bool fullscreen, const std::string& text)
       std::cout << "logical size error " << SDL_GetError() << std::endl;
   }
 
-  // TODO: consider swapping this for a SDL_Surface to enable getting pixel data
-  // or ignore the renderer altogether and draw straigt to the window surface
-  // or use SDL_RenderReadPixels
   scr = SDL_CreateTexture(ren, SDL_GetWindowPixelFormat(win), 0, w, h);
 }
 void redraw()
@@ -128,6 +123,15 @@ void pset(int x, int y, const ColorRGB& color)
 {
   SDL_SetRenderDrawColor(ren, color.r, color.g, color.b, 255);
   SDL_RenderDrawPoint(ren, x, y);
+}
+
+ColorRGB pget(int x, int y)
+{
+  SDL_Rect point = {x, y, 1, 1};
+  Uint32 data;
+  SDL_RenderReadPixels(ren, &point, SDL_GetWindowPixelFormat(win), &data, 4);
+
+  return ColorRGB( INTtoRGB(data) );
 }
 
 bool onScreen(int x, int y)

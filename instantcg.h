@@ -179,6 +179,7 @@ void screen(int width = 640, int height = 400, bool fullscreen = false, const st
 void redraw();                                  // Updates the visible display
 void cls(const ColorRGB& color = RGB_Black);    // Clears the screen to the given color
 void pset(int x, int y, const ColorRGB& color); // Sets a single pixel color
+ColorRGB pget(int x, int y);                    // returns the pixel color 
 bool onScreen(int x, int y);                    // True if the given coords are inside the screen
 void drawBuffer(Uint32* buffer);                // Draws an array of (w * h) pixel data to the screen
 
