@@ -84,25 +84,29 @@ bool keyDown(SDL_Scancode key)
 
 //The screen function: sets up the window for 32-bit color graphics.
 //Creates a graphical screen of width*height pixels in 32-bit color.
-//Set fullscreen to 0 for a window, or to 1 for fullscreen output
+//Set fullscreen to false for a window, or to true for fullscreen output
 //text is the caption or title of the window
-//also inits SDL
+//also inits SDL therefore you MUST call screen before any other InstantCG or SDL functions
 void screen(int width, int height, bool fullscreen, const std::string& text)
 {
 	w = width;
 	h = height;
 
-  Uint32 windowFlags = SDL_WINDOW_SHOWN;
-  if (fullscreen) windowFlags |= SDL_WINDOW_FULLSCREEN;
-
-	// TODO: add fullscreen option
-	// TODO: add error handeling
-	SDL_Init(SDL_INIT_EVERYTHING);
-	win = SDL_CreateWindow(text.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, w, h, windowFlags);
+  if ( !fullscreen ) {
+    win = SDL_CreateWindow(text.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, w, h, SDL_WINDOW_SHOWN);
+  } else {
+    win = SDL_CreateWindow(text.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 0, 0, SDL_WINDOW_FULLSCREEN_DESKTOP);
+  }
   if (win == NULL) { std::cout << "Window error: " << SDL_GetError() << std::endl; SDL_Quit(); std::exit(1);}
 
-	ren = SDL_CreateRenderer(win, -1, 0 );//SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+	ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED );//| SDL_RENDERER_PRESENTVSYNC);
   if (ren == NULL) { std::cout << "Renderer error: " << SDL_GetError() << std::endl; SDL_Quit(); std::exit(1); }
+
+  if (fullscreen) {
+    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");  // make the scaled rendering look smoother.
+    if (SDL_RenderSetLogicalSize(ren, w, h) != 0)
+      std::cout << "logical size error " << SDL_GetError() << std::endl;
+  }
 
   // TODO: consider swapping this for a SDL_Surface to enable getting pixel data
   // or ignore the renderer altogether and draw straigt to the window surface
@@ -134,10 +138,12 @@ bool onScreen(int x, int y)
 void drawBuffer(Uint32* buffer)
 {
   /*
-  if (SDL_GetWindowSurface(win) == NULL)
+  SDL_Surface* scr_surface = SDL_GetWindowSurface(win);
+
+  if (scr_surface == NULL)
   { std::cout << "drawBuffer error: " << SDL_GetError() << std::endl; end(); }
 
-  SDL_PixelFormat* format = SDL_GetWindowSurface(win)->format;
+  SDL_PixelFormat format = *scr_surface->format;
 
   SDL_LockTexture(scr, NULL, &scr_pixels, &scr_pitch);
   //*/
