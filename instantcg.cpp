@@ -99,7 +99,7 @@ void screen(int width, int height, bool fullscreen, const std::string& text)
   }
   if (win == NULL) { std::cout << "Window error: " << SDL_GetError() << std::endl; SDL_Quit(); std::exit(1);}
 
-	ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED );//| SDL_RENDERER_PRESENTVSYNC);
+	ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
   if (ren == NULL) { std::cout << "Renderer error: " << SDL_GetError() << std::endl; SDL_Quit(); std::exit(1); }
 
   if (fullscreen) {
@@ -200,6 +200,11 @@ void end()
 	std::exit(1);
 }
 
+void getMouseState(int& mouseX, int& mouseY)
+{
+  SDL_GetMouseState(&mouseX, &mouseY);
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 //2D SHAPES/////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -224,7 +229,7 @@ void drawLine(int x1, int y1, int x2, int y2, const ColorRGB& color)
 void drawRect(int x1, int y1, int x2, int y2, const ColorRGB& color)
 {
 	SDL_SetRenderDrawColor(ren, color.r, color.g, color.b, 255);
-    SDL_Rect r = {x1, y1, x2, y2};
+    SDL_Rect r = {x1, y1, x2-x1, y2-y1};
     SDL_RenderFillRect(ren, &r);
 }
 

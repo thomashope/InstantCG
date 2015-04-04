@@ -190,6 +190,7 @@ void sleep();
 void waitFrame(double oldTime, double frameDuration); //in seconds
 bool done(bool quit_if_esc = true, bool delay = true);
 void end();                                                 // quits the program
+void getMouseState(int& mouseX, int& mouseY);               // sets arguments to the current location of the mouse
 inline unsigned long getTicks() { return SDL_GetTicks(); }  // milliseconds since SDL was initialised
 inline double getTime() { return SDL_GetTicks() / 1000.0; } // seconds since SDL was initialised
 
@@ -199,10 +200,8 @@ inline double getTime() { return SDL_GetTicks() / 1000.0; } // seconds since SDL
 
 void horLine(int y, int x1, int x2, const ColorRGB& color); // draws a horizontal line
 void verLine(int x, int y1, int y2, const ColorRGB& color); // draws a verticle line
-void drawLine(int x1, int y1, int x2, int y2, const ColorRGB& color);   // draws a line
-inline void line(int x1, int y1, int x2, int y2, const ColorRGB& color) // shortcut for drawLine()
-{ drawLine(x1, y1, x2, y2, color); }
-void drawRect(int x1, int y1, int x2, int y2, const ColorRGB& color);
+void drawLine(int x1, int y1, int x2, int y2, const ColorRGB& color);   // endpoints (x1, y1) (x2, y2)
+void drawRect(int x1, int y1, int x2, int y2, const ColorRGB& color);   // corners   (x1, y1) (x2, y2)
 
 ////////////////////////////////////////////////////////////////////////////////
 //COLOR CONVERSIONS/////////////////////////////////////////////////////////////
