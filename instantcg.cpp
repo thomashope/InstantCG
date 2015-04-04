@@ -137,52 +137,8 @@ bool onScreen(int x, int y)
 
 void drawBuffer(Uint32* buffer)
 {
-  /*
-  //TODO: figure out how to write pixel data directly
-  SDL_Surface* scr_surface = SDL_GetWindowSurface(win);
-
-  if (scr_surface == NULL)
-  { std::cout << "drawBuffer error: " << SDL_GetError() << std::endl; end(); }
-
-  SDL_PixelFormat format = *scr_surface->format;
-
-  SDL_LockTexture(scr, NULL, &scr_pixels, &scr_pitch);
-  //*/
-
   SDL_UpdateTexture(scr, NULL, buffer, w * sizeof(Uint32));
   SDL_RenderCopy(ren, scr, NULL, NULL);
-
-  // SDL_Point point;
-  // for (int y = 0; y < h; y++)
-  // {
-  //   for (int x = 0; x < w; x++)
-  //   {
-  //     //TODO: get this working so it writes properly
-      
-  //     ((Uint32*)scr_pixels)[y * w + x] = SDL_MapRGB(format,
-  //                                                 (buffer[y*w+x] >> 16) & 0xff,
-  //                                                 (buffer[y*w+x] >>  8) & 0xff,
-  //                                                  buffer[y*w+x]        & 0xff );
-  //     //
-      
-  //     //*
-  //     SDL_SetRenderDrawColor(ren,
-  //       (buffer[(x*h)+y] >> 16) & 0xff,
-  //       (buffer[(x*h)+y] >>  8) & 0xff,
-  //       (buffer[(x*h)+y]      ) & 0xff,
-  //       255);
-
-  //     point.x = x;
-  //     point.y = y;
-  //     SDL_RenderDrawPoints(ren, &point, 1);
-  //     //*/
-  //   }
-  // }
-
-  /*
-  SDL_UnlockTexture(scr);
-  SDL_RenderCopy(ren, scr, NULL, NULL);
-  //*/
 }
 
 ////////////////////////////////////////////////////////////////////////////////
