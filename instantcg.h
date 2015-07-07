@@ -176,12 +176,14 @@ void readKeys();        // gets the current state of the keyboard
 ////////////////////////////////////////////////////////////////////////////////
 
 void screen(int width = 640, int height = 400, bool fullscreen = false, const std::string& text = " ");
-void redraw();                                  // Updates the visible display
-void cls(const ColorRGB& color = RGB_Black);    // Clears the screen to the given color
-void pset(int x, int y, const ColorRGB& color); // Sets a single pixel color
-ColorRGB pget(int x, int y);                    // returns the pixel color 
-bool onScreen(int x, int y);                    // True if the given coords are inside the screen
-void drawBuffer(Uint32* buffer);                // Draws an array of (w * h) pixel data to the screen
+void redraw();                                              // Updates the visible display
+void cls(const ColorRGB& color = RGB_Black);                // Clears the screen to the given color
+void pset(int x, int y, const ColorRGB& color);             // Sets a single pixel color
+ColorRGB pget(int x, int y);                                // returns the pixel color 
+bool onScreen(int x, int y);                                // True if the given coords are inside the screen
+// if your writing to the buffer[x][y] leave at false
+// if your using buffer[y][x] or buffer[y * width + x] set to true, true is 'faster' (i.e. takes better advantage of SDL2)
+void drawBuffer(Uint32* buffer, bool swapXY = false);       // Draws an array of (w * h) pixel data to the screen
 
 ////////////////////////////////////////////////////////////////////////////////
 //NON GRAPHICAL FUNCTIONS///////////////////////////////////////////////////////

@@ -141,10 +141,32 @@ bool onScreen(int x, int y)
 
 //Draws a buffer of pixels to the screen
 //The number of elements in the buffer must equal the number of pixels on screen (width * height)
-void drawBuffer(Uint32* buffer)
+void drawBuffer(Uint32* buffer, bool swapXY)
 {
-  SDL_UpdateTexture(scr, NULL, buffer, w * sizeof(Uint32));
-  SDL_RenderCopy(ren, scr, NULL, NULL);
+    if( swapXY )
+    {
+        // copy the entire buffer straight into the texture
+        SDL_UpdateTexture(scr, NULL, buffer, w * sizeof(Uint32));
+    }
+    else
+    {
+        for( int x = 0; x < w; ++x )
+        {
+            // the verticle line to be update on the target texture
+            SDL_Rect vStripe;
+            vStripe.x = x;
+            vStripe.y = 0;
+            vStripe.w = 1;
+            vStripe.h = h;
+
+            // things get a bit tricksy here, i'm telling sdl the buffer is only 1 pixel wide
+            SDL_UpdateTexture(scr, &vStripe, buffer, sizeof(Uint32));
+            // then incrementing the buffer pointer to the next line of the beffer i.e. the next vStripe in the texture 
+            buffer += h;
+        }
+    }
+    // draw the entire texture to the screen
+    SDL_RenderCopy(ren, scr, NULL, NULL);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
