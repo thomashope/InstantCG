@@ -167,9 +167,9 @@ extern SDL_Renderer* ren;
 //KEYBOARD FUNCTIONS////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-bool keyDown(SDL_Keycode key);   // checks if the key is held down, true as long as the key is held
-bool keyDown(SDL_Scancode key);  // checks if the key is held down, true as long as the key is held
-void readKeys();        // gets the current state of the keyboard
+bool keyDown(SDL_Keycode key);  // checks if the key is held down, true as long as the key is held
+bool keyDown(SDL_Scancode key); // checks if the key is held down, true as long as the key is held
+void readKeys();                // gets the current state of the keyboard
 
 ////////////////////////////////////////////////////////////////////////////////
 //BASIC SCREEN FUNCTIONS////////////////////////////////////////////////////////
@@ -181,7 +181,7 @@ void cls(const ColorRGB& color = RGB_Black);                // Clears the screen
 void pset(int x, int y, const ColorRGB& color);             // Sets a single pixel color
 ColorRGB pget(int x, int y);                                // returns the pixel color 
 bool onScreen(int x, int y);                                // True if the given coords are inside the screen
-// if your writing to the buffer[x][y] leave at false
+// if your writing to the buffer[x][y] in that order leave at false
 // if your using buffer[y][x] or buffer[y * width + x] set to true, true is 'faster' (i.e. takes better advantage of SDL2)
 void drawBuffer(Uint32* buffer, bool swapXY = false);       // Draws an array of (w * h) pixel data to the screen
 
@@ -190,7 +190,7 @@ void drawBuffer(Uint32* buffer, bool swapXY = false);       // Draws an array of
 ////////////////////////////////////////////////////////////////////////////////
 
 void sleep();
-void waitFrame(double oldTime, double frameDuration); //in seconds
+void waitFrame(double oldTime, double frameDuration);       // frame duration in seconds
 bool done(bool quit_if_esc = true, bool delay = true);
 void end();                                                 // quits the program
 void getMouseState(int& mouseX, int& mouseY);               // sets arguments to the current location of the mouse
@@ -213,7 +213,7 @@ ColorHSL RGBtoHSL(const ColorRGB& colorRGB);
 ColorRGB HSLtoRGB(const ColorHSL& colorHSL);
 ColorHSV RGBtoHSV(const ColorRGB& colorRGB);
 ColorRGB HSVtoRGB(const ColorHSV& colorHSV);
-Uint32 RGBtoINT(const ColorRGB& colorRGB);
+Uint32   RGBtoINT(const ColorRGB& colorRGB);
 ColorRGB INTtoRGB(Uint32 colorINT);
 
 
