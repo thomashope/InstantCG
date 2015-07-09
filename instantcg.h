@@ -204,6 +204,8 @@ inline double getTime() { return SDL_GetTicks() / 1000.0; } // seconds since SDL
 void horLine(int y, int x1, int x2, const ColorRGB& color); // draws a horizontal line
 void verLine(int x, int y1, int y2, const ColorRGB& color); // draws a verticle line
 void drawLine(int x1, int y1, int x2, int y2, const ColorRGB& color);   // endpoints (x1, y1) (x2, y2)
+bool drawCircle(int xc, int yc, int radius, const ColorRGB& color);     // circle outline at center (xc, yc)
+bool drawDisk(int xc, int yc, int radius, const ColorRGB& color);       // filled circle at center (xc, yc)
 void drawRect(int x1, int y1, int x2, int y2, const ColorRGB& color);   // corners   (x1, y1) (x2, y2)
 
 ////////////////////////////////////////////////////////////////////////////////

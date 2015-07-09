@@ -1,7 +1,7 @@
 # variables
 CC=g++
 CFlags=-c
-SDL=-framework SDL2
+SDL=-lSDL2
 BUILD=build/
 INST=$(BUILD)instantcg.o -iquote .
 EXAMP=examples/

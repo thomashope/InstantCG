@@ -1,47 +1,41 @@
 #include "instantcg.h"
 using namespace InstantCG;
 
-int mouseX = 0;
-int mouseY = 0;
+int mouseX = 0, mouseY = 0;
+float x = 128, y = 128;
+float curTime = 0, oldTime = 0, dt = 1/50.0;
+
+const int WIDTH = 512;
+const int HEIGHT = 512;
+
+Uint32 buffer[WIDTH * HEIGHT];
 
 int main()
 {
+	screen(WIDTH, HEIGHT, false, "Hello World!");
+ 
+    while( !done(true, false) )
+    {
+        // set the old time to the time of the prevous loop
+        oldTime = curTime;
+        curTime = getTime();        // get the current time 
+        dt = (curTime - oldTime);   // get delta time
 
-	screen(256, 256, false, "Hello World!");
-    ColorRGB bgColor, sample;
-
-	while( !done() )
-	{
-        bgColor.r = std::rand()&0xff;
-        bgColor.g = std::rand()&0xff;
-        bgColor.b = std::rand()&0xff;
-        cls( bgColor );
-        
-        horLine(128, 0, 255, RGB_White);
-        verLine(128, 0, 255, RGB_White);
-        drawRect(100, 0, 140, 40, RGB_Green);
-        drawRect(100, 40, 140, 80, RGB_Yellow);
-
-        if (keyDown(SDLK_SPACE))
+        for( int x = 0; x < w; x++ )
+        for( int y = 0; y < h; y++ )
         {
-            cls(RGB_Black);
-            drawRect(0, 0, 20, 40, RGB_Blue);
+            buffer[y*WIDTH+x] = RGBtoINT(ColorRGB(x/2, y/2, 128));
         }
-        
-        if (keyDown(SDL_SCANCODE_M)) {
-            getMouseState(mouseX, mouseY);
+        drawBuffer(buffer, true);
 
-            std::cout << "mouse: " << mouseX << ", " << mouseY << std::endl;
-
-            sample = pget(mouseX, mouseY);
-
-            drawRect(0, 0, 24, 44, RGB_Black);
-            drawRect(0, 0, 20, 40, sample);
-        }
+        // if an arrow key is pressed, move the circle in it's direction 
+        float speed = 40 * dt;
+        if( keyDown(SDL_SCANCODE_RIGHT) ) { x += speed; }
+        if( keyDown(SDL_SCANCODE_LEFT ) ) { x -= speed; }
+        if( keyDown(SDL_SCANCODE_DOWN ) ) { y += speed; }
+        if( keyDown(SDL_SCANCODE_UP   ) ) { y -= speed; }
 
         redraw();
-        cls();
-	}
-
+    }
 	return 0;
 }

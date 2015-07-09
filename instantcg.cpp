@@ -252,6 +252,73 @@ void drawLine(int x1, int y1, int x2, int y2, const ColorRGB& color)
 	SDL_SetRenderDrawColor(ren, color.r, color.g, color.b, 255);
 	SDL_RenderDrawLine(ren, x1, y1, x2, y2); 
 }
+bool drawCircle(int xc, int yc, int radius, const ColorRGB& color)
+{
+    if(xc - radius < 0 || xc + radius >= w || yc - radius < 0 || yc + radius >= h) return 0;
+    int x = 0;
+    int y = radius;
+    int p = 3 - (radius << 1);
+    int a, b, c, d, e, f, g, h;
+    SDL_SetRenderDrawColor(ren, color.r, color.g, color.b, 255);
+    while (x <= y)
+    {
+        a = xc + x; //8 pixels can be calculated at once thanks to the symmetry
+        b = yc + y;
+        c = xc - x;
+        d = yc - y;
+        e = xc + y;
+        f = yc + x;
+        g = xc - y;
+        h = yc - x;
+        SDL_RenderDrawPoint( ren, a, b);
+        SDL_RenderDrawPoint( ren, c, d);
+        SDL_RenderDrawPoint( ren, e, f);
+        SDL_RenderDrawPoint( ren, g, f);
+        if(x > 0) //avoid drawing pixels at same position as the other ones
+        {
+            SDL_RenderDrawPoint(ren, a, d);
+            SDL_RenderDrawPoint(ren, c, b);
+            SDL_RenderDrawPoint(ren, e, h);
+            SDL_RenderDrawPoint(ren, g, h);
+        }
+     if(p < 0) p += (x++ << 2) + 6;
+     else p += ((x++ - y--) << 2) + 10;
+  }
+  
+  return 1;
+}
+bool drawDisk(int xc, int yc, int radius, const ColorRGB& color)
+{
+if(xc + radius < 0 || xc - radius >= w || yc + radius < 0 || yc - radius >= h) return 0; //every single pixel outside screen, so don't waste time on it
+    int x = 0;
+    int y = radius;
+    int p = 3 - (radius << 1);
+    int a, b, c, d, e, f, g, h;
+    int pb = yc + radius + 1, pd = yc + radius + 1; //previous values: to avoid drawing horizontal lines multiple times  (ensure initial value is outside the range)
+    SDL_SetRenderDrawColor(ren, color.r, color.g, color.b, 255);
+    while (x <= y)
+    {
+        // write data
+        a = xc + x;
+        b = yc + y;
+        c = xc - x;
+        d = yc - y;
+        e = xc + y;
+        f = yc + x;
+        g = xc - y;
+        h = yc - x;
+        if(b != pb) SDL_RenderDrawLine(ren, a, b, c, b);
+        if(d != pd) SDL_RenderDrawLine(ren, a, d, c, d);
+        if(f != b)  SDL_RenderDrawLine(ren, e, f, g, f);
+        if(h != d && h != f) SDL_RenderDrawLine(ren, e, h, g, h);
+        pb = b;
+        pd = d;
+        if(p < 0) p += (x++ << 2) + 6;
+        else p += ((x++ - y--) << 2) + 10;
+    }
+  
+  return 1;
+}
 void drawRect(int x1, int y1, int x2, int y2, const ColorRGB& color)
 {
 	SDL_SetRenderDrawColor(ren, color.r, color.g, color.b, 255);
