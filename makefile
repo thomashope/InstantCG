@@ -26,6 +26,10 @@ textures: $(EXAMP)textures.cpp
 plasma: $(EXAMP)plasma.cpp
 	$(CC) $(EXAMP)plasma.cpp $(INST) $(SDL) -o plasma.out
 
+
+input: $(EXAMP)input.cpp
+	$(CC) $(EXAMP)input.cpp $(INST) $(SDL) -o inupt.out$
+
 # delete temporary files
 clean:
 	rm -rf *.o *.out
