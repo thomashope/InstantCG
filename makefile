@@ -7,7 +7,7 @@ INST=$(BUILD)instantcg.o -iquote .
 EXAMP=examples/
 
 # an example of instantCG to make sure things are building correctly
-all: instantcg helloWorld fire textures plasma 
+all: instantcg helloWorld fire textures plasma input
 
 # compile InstantCG as an .o file
 instantcg:
@@ -26,9 +26,8 @@ textures: $(EXAMP)textures.cpp
 plasma: $(EXAMP)plasma.cpp
 	$(CC) $(EXAMP)plasma.cpp $(INST) $(SDL) -o plasma.out
 
-
 input: $(EXAMP)input.cpp
-	$(CC) $(EXAMP)input.cpp $(INST) $(SDL) -o inupt.out$
+	$(CC) $(EXAMP)input.cpp $(INST) $(SDL) -o input.out
 
 # delete temporary files
 clean:

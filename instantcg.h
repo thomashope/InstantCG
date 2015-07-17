@@ -194,6 +194,7 @@ void waitFrame(double oldTime, double frameDuration);       // frame duration in
 bool done(bool quit_if_esc = true, bool delay = true);
 void end();                                                 // quits the program
 void getMouseState(int& mouseX, int& mouseY);               // sets arguments to the current location of the mouse
+void getMouseState(int& mouseX, int& mouseY, bool& LMB, bool& RMB); // sets left and right mouse button state
 inline unsigned long getTicks() { return SDL_GetTicks(); }  // milliseconds since SDL was initialised
 inline double getTime() { return SDL_GetTicks() / 1000.0; } // seconds since SDL was initialised
 

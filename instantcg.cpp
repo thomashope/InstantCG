@@ -231,6 +231,13 @@ void getMouseState(int& mouseX, int& mouseY)
   SDL_GetMouseState(&mouseX, &mouseY);
 }
 
+void getMouseState(int& mouseX, int& mouseY, bool& LMB, bool& RMB)
+{
+    Uint32 buttonState = SDL_GetMouseState(&mouseX, &mouseY);
+    LMB = buttonState & SDL_BUTTON(SDL_BUTTON_LEFT);
+    RMB = buttonState & SDL_BUTTON(SDL_BUTTON_RIGHT);
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 //2D SHAPES/////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
