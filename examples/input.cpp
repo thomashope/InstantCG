@@ -2,6 +2,8 @@
 using namespace InstantCG;
 
 bool lockCursor = false;
+int mouseX, mouseY;
+bool LMB, RMB;
 
 int main()
 {
@@ -10,8 +12,6 @@ int main()
 
     while( !done( true, false ) )
     {
-        int mouseX, mouseY;
-        bool LMB, RMB;
         getMouseState(mouseX, mouseY, LMB, RMB);
 
         horLine( mouseY, 0, w, RGB_White);
@@ -38,9 +38,9 @@ int main()
 
         SDL_SetRelativeMouseMode( SDL_bool(lockCursor) );
 
-        if( lockCursor )
+        if( !onScreen(mouseX, mouseY) )
         {
-            
+            std::cout << "x: " << mouseX << "\ty: " << mouseY << std::endl;
         }
 
         redraw();

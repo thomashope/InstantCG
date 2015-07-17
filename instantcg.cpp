@@ -56,11 +56,6 @@ SDL_Texture* scr; // used in drawBuffer()
 //KEYBOARD FUNCTIONS////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-//Gives value of pressed keys to inkeys
-void readKeys()
-{
-    inkeys = SDL_GetKeyboardState(NULL);
-}
 
 // visit https://wiki.libsdl.org/CategoryKeyboard for description of scancodes vs keycodes
 
@@ -224,6 +219,12 @@ void end()
 	SDL_DestroyWindow(win);
 	SDL_Quit();
 	std::exit(1);
+}
+
+//Gives value of pressed keys to inkeys
+void readKeys()
+{
+    inkeys = SDL_GetKeyboardState(NULL);
 }
 
 void getMouseState(int& mouseX, int& mouseY)
