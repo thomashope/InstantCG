@@ -12,6 +12,7 @@ local function AddProject(name)
         architecture "x86_64"
 
         files {
+            "instantcg.h",
             "instantcg.cpp",
 
             "examples/"..name..".cpp",
@@ -63,7 +64,7 @@ local function AddProject(name)
             }
 end
 
-AddProject "helloWorld"
+AddProject "hello_world"
 AddProject "fire"
 AddProject "input"
 AddProject "plasma"
