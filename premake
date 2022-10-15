@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+OS_NAME=`uname -o 2>/dev/null || uname -s`
+
+if [ $OS_NAME == "Msys" ]; then
+	./tools/premake/premake5.exe "$@"
+else
+	./tools/premake/premake5 "$@"
+fi
