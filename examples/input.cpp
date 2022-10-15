@@ -5,7 +5,7 @@ bool lockCursor = false;
 int mouseX, mouseY;
 bool LMB, RMB;
 
-int main()
+int main(int argc, char** argv)
 {
     screen();
     ColorRGB bg = RGB_Black;

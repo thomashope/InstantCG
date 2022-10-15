@@ -64,3 +64,7 @@ local function AddProject(name)
 end
 
 AddProject "helloWorld"
+AddProject "fire"
+AddProject "input"
+AddProject "plasma"
+AddProject "textures"

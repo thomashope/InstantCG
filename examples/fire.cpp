@@ -70,4 +70,6 @@ int main(int argc, char *argv[])
     drawBuffer(buffer[0]);
     redraw();
   }
+
+  return 0;
 }
