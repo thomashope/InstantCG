@@ -36,7 +36,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef INSTANTCG_H
 #define INSTANTCG_H
 
-#include <SDL2/SDL.h>
+#include <SDL.h>
 
 #include <iostream>
 #include <string>

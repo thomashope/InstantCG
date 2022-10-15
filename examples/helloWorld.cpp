@@ -1,4 +1,5 @@
 #include "instantcg.h"
+
 using namespace InstantCG;
 
 int mouseX = 0, mouseY = 0;
@@ -10,7 +11,7 @@ const int HEIGHT = 512;
 
 Uint32 buffer[WIDTH * HEIGHT];
 
-int main()
+int main(int argc, char** argv)
 {
 	screen(WIDTH, HEIGHT, false, "Hello World!");
  
