@@ -1,8 +1,12 @@
+
 workspace "InstantCG"
     configurations { "Debug", "Release" }
     location ("build/" .. _ACTION)
 
 local function AddProject(name)
+
+    local dir_name = "example_"..name
+
     project (name)
         kind "WindowedApp"
         location ("build/" .. _ACTION)
@@ -12,14 +16,15 @@ local function AddProject(name)
         architecture "x86_64"
 
         files {
-            "instantcg.h",
-            "instantcg.cpp",
+            "../instantcg.h",
+            "../instantcg.cpp",
 
-            "examples/"..name..".cpp",
+            dir_name.."/*.cpp",
+            dir_name.."/*.h",
         }
 
         sysincludedirs {
-            "."
+            ".."
         }
 
         -- configuration specific settings
@@ -43,7 +48,7 @@ local function AddProject(name)
         filter "action:vs*"
 
             libdirs {
-                "third_party/sdl2/windows/lib/x64"
+                "libs/sdl2/windows/lib/x64"
             }
 
             links {
@@ -52,11 +57,11 @@ local function AddProject(name)
             }
 
             postbuildcommands {
-                "{COPYFILE} %{wks.location}/../../third_party/sdl2/windows/lib/x64/SDL2.dll %{cfg.buildtarget.directory}",
+                "{COPYFILE} %{wks.location}/../../libs/sdl2/windows/lib/x64/SDL2.dll %{cfg.buildtarget.directory}",
             }
 
             sysincludedirs {
-                "third_party/sdl2/windows/include"
+                "libs/sdl2/windows/include"
             }
 
             flags {

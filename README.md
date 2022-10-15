@@ -8,6 +8,7 @@ Both SDL2 and premake have been bundled with the repo so you can quickly build t
 ### Windows from Git Bash
 
 ```
+cd examples
 ./premake vs2019
 start build/vs2019/InstantCG.sln
 ```
