@@ -63,7 +63,7 @@ SDL_Texture* tex = nullptr;
     
 std::map<int, bool> keypressed; //for the "keyPressed" function to detect a keypress only once
 SDL_Surface* scr; //the single SDL surface used
-Uint8* inkeys = 0;
+const Uint8* inkeys = 0;
 SDL_Event event = {0};
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -73,22 +73,24 @@ SDL_Event event = {0};
 bool keyDown(int key) //this checks if the key is held down, returns true all the time until the key is up
 {
   if(!inkeys) return false;
-  return (inkeys[key] != 0);
+  SDL_Scancode scancode = SDL_GetScancodeFromKey(key);
+  return (inkeys[scancode] != 0);
 }
 
 bool keyPressed(int key) //this checks if the key is *just* pressed, returns true only once until the key is up again
 {
   if(!inkeys) return false;
-  if(keypressed.find(key) == keypressed.end()) keypressed[key] = false;
-  if(inkeys[key])
+  SDL_Scancode scancode = SDL_GetScancodeFromKey(key);
+  if(keypressed.find(scancode) == keypressed.end()) keypressed[scancode] = false;
+  if(inkeys[scancode])
   {
-    if(keypressed[key] == false)
+    if(keypressed[scancode] == false)
     {
-      keypressed[key] = true;
+      keypressed[scancode] = true;
       return true;
     }
   }
-  else keypressed[key] = false;
+  else keypressed[scancode] = false;
 
   return false;
 }
@@ -134,14 +136,14 @@ void screen(int width, int height, bool fullscreen, const std::string& text)
     std::exit(1);
   }
 
-  scr = SDL_CreateRGBSurfaceWithFormat(0, w, h, colorDepth, SDL_PIXELFORMAT_RGBA32);
+  scr = SDL_CreateRGBSurfaceWithFormat(0, w, h, colorDepth, SDL_PIXELFORMAT_ARGB8888);
   if(!scr)
   {
     printf("ERROR: failed to create render surface: %s\n", SDL_GetError());
     std::exit(1);
   }
 
-  tex = SDL_CreateTextureFromSurface(ren, scr);
+  tex = SDL_CreateTexture(ren, scr->format->format, SDL_TEXTUREACCESS_STREAMING, w, h);
   if(!tex)
   {
     printf("ERROR: failed to create render GPU texture: %s\n", SDL_GetError());
@@ -185,7 +187,7 @@ void pset(int x, int y, const ColorRGB& color)
   if(x < 0 || y < 0 || x >= w || y >= h) return;
   Uint32 colorSDL = SDL_MapRGB(scr->format, color.r, color.g, color.b);
   Uint32* bufp;
-  bufp = (Uint32*)scr->pixels + y * scr->pitch / 4 + x;
+  bufp = ((Uint32*)scr->pixels) + y * scr->pitch / 4 + x;
   *bufp = colorSDL;
 }
 
@@ -311,10 +313,8 @@ void end()
 //Normally you have to use readkeys every time you want to use inkeys, but the done() function also uses inkeys so it's not needed to use readkeys if you use done().
 void readKeys()
 {
-#if false
   SDL_PumpEvents();
-  inkeys = SDL_GetKeyState(NULL);
-#endif
+  inkeys = SDL_GetKeyboardState(NULL);
 }
 
 void getMouseState(int& mouseX, int& mouseY)

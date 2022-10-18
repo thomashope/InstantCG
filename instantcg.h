@@ -245,7 +245,7 @@ ColorHSL RGBtoHSL(const ColorRGB& colorRGB);
 ColorRGB HSLtoRGB(const ColorHSL& colorHSL);
 ColorHSV RGBtoHSV(const ColorRGB& colorRGB);
 ColorRGB HSVtoRGB(const ColorHSV& colorHSV);
-Uint32 RGBtoINT(const ColorRGB& colorRGB);
+Uint32 RGBtoINT(const ColorRGB& colorRGB);    // returns an integer in the format xRGB
 ColorRGB INTtoRGB(Uint32 colorINT);
 
 ////////////////////////////////////////////////////////////////////////////////
