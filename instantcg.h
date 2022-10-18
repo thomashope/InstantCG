@@ -333,7 +333,7 @@ void audioPlay(const std::vector<double>& samples);
 void audioSetMode(int mode); //0: silent, 1: full (no volume calculations ==> faster), 2: volume-controlled (= default value)
 void audioSetVolume(double volume); //multiplier used if mode is 2 (volume-controlled). Default value is 1.0.
 
-} //end of namespace QuickCG
+} //end of namespace InstantCG
 
 #endif
 

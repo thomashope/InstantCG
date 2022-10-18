@@ -162,8 +162,8 @@ void screen(int width, int height, bool fullscreen, const std::string& text)
 //Locks the screen
 void lock()
 {
-//  if(SDL_MUSTLOCK(scr))
-//  if(SDL_LockSurface(scr) < 0)
+  if(SDL_MUSTLOCK(scr))
+    SDL_LockSurface(scr);
   return;
 }
 
@@ -171,7 +171,7 @@ void lock()
 void unlock()
 {
   if(SDL_MUSTLOCK(scr))
-  SDL_UnlockSurface(scr);
+    SDL_UnlockSurface(scr);
 }
 
 //Updates the screen.  Has to be called to view new pixels, but use only after
@@ -282,18 +282,16 @@ void sleep(double seconds)
 
 void waitFrame(double oldTime, double frameDuration) //in seconds
 {
-#if false
   float time = getTime();
   while(time - oldTime < frameDuration)
   {
     time = getTime();
     SDL_PollEvent(&event);
     if(event.type == SDL_QUIT) end();
-    inkeys = SDL_GetKeyState(NULL);
+    inkeys = SDL_GetKeyboardState(NULL);
     if(inkeys[SDLK_ESCAPE]) end();
     SDL_Delay(5); //so it consumes less processing power
   }
-#endif
 }
 
 //Returns 1 if you close the window or press the escape key. Also handles everything that's needed per frame.
