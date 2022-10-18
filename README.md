@@ -1,5 +1,8 @@
 # InstantCG
+
 A port of [QuickCG](https://lodev.org/quickcg/) by Lode Vandevenne to SDL2
+
+InstantCG aims to be as backwards compatible as possible with QuickCG. Ideally you should only need to change the include line and convert `using namespace QuickCG` to `using namespace InstantCG`.
 
 ## Using InstantCG
 
