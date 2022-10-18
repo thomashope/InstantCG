@@ -99,5 +99,5 @@ end
 AddProject "hello_world"
 AddProject "fire"
 -- AddProject "input"
--- AddProject "plasma"
+AddProject "plasma"
 -- AddProject "textures"
