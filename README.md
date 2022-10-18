@@ -41,3 +41,12 @@ open build/xcode4/InstantCG.xcworkspace
 ```
 
 Select the project by clicking the current project name in the top bar in Xcode, run by pressing the play button in the top left.
+
+## TODO
+
+Some of these things might work already, just need to find examples and add tests for them.
+- [ ] file loading
+- [ ] image loading
+- [ ] print text to screen
+- [ ] reading text from the user
+- [ ] playing audio
