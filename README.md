@@ -28,3 +28,13 @@ start build/vs2019/InstantCG.sln
 ```
 
 In the solution explorer, right click the example you want to run and select 'Set as Startup Project', then press F5 to build and run.
+
+### Mac from Terminal.app
+
+```
+cd examples
+./premake xcode4
+open build/xcode4/InstantCG.xcworkspace
+```
+
+Select the project by clicking the current project name in the top bar in Xcode, run by pressing the play button in the top left.
