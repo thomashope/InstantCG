@@ -97,7 +97,7 @@ local function AddProject(name)
 end
 
 AddProject "hello_world"
-AddProject "fire"
-AddProject "input"
-AddProject "plasma"
-AddProject "textures"
+-- AddProject "fire"
+-- AddProject "input"
+-- AddProject "plasma"
+-- AddProject "textures"

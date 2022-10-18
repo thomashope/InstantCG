@@ -1,17 +1,15 @@
 /*
+InstantCG is a port of QuickCG from SDL1.2 to SDL2
 
-InstantCG 20150401
+The Copyright for QuickCG is held by Lode Vandevenne as set out under it's original terms,
+see below. Any modifications by are released into the Public Domain under the terms of the
+UNLICENSE https://unlicense.org
+*/
 
-InstantCG is a derivative work of QuickCG by Thomas Hope.
-The aim is for InstantCG to be a drop in replacement for QuickCG using SDL2
-and to build on QuickCG to include functionality that is only availible in
-SDL2.
+/*
+QuickCG 20191227
 
-The below legal notice is preserved from the original QuickCG
-
-QuickCG 20071121
-
-Copyright (c) 2004-2007, Lode Vandevenne
+Copyright (c) 2004-2019, Lode Vandevenne
 
 All rights reserved.
 
@@ -33,41 +31,70 @@ NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef INSTANTCG_H
-#define INSTANTCG_H
+/*
+QuickCG is an SDL 1.2 codebase that wraps some of the SDL 1.2 functionality.
+It's used by Lode's Computer Graphics Tutorial to work with simple function calls
+to demonstrate graphical programs. It may or may not be of industrial strength
+for games, though I've actually used it for some.
+
+QuickCG can handle some things that standard C++ does not but that are useful, such as:
+-drawing graphics
+-a bitmap font
+-simplified saving and loading of files
+-reading keyboard and mouse input
+-playing sound
+-color models
+-loading images
+
+Contact info:
+My email address is (puzzle the account and domain together with an @ symbol):
+Domain: gmail dot com.
+Account: lode dot vandevenne.
+*/
+
+#ifndef _instantcg_h_included
+#define _instantcg_h_included
 
 #include <SDL.h>
 
-#include <iostream>
 #include <string>
 #include <sstream>
-#include <vector>
 #include <iomanip>
+#include <vector>
+#include <algorithm> //std::min and std::max
 
 namespace InstantCG
 {
+
 ////////////////////////////////////////////////////////////////////////////////
 //useful templates//////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
- //usage: std::string str = valtostr(25353.91654654f);
- template<typename T>
- std::string valtostr(const T& val)
- {
-     std::ostringstream sstream;
-     sstream << val;
-     return sstream.str();
- }
+//don't know why, but the standard C++ abs sometimes gives cryptic errors? if so use this :D
+template<typename T>
+const T template_abs(const T &a)
+{
+  return (a < 0) ? -a : a;
+}
 
-//usage: double val = stringtoval<double>("456.498.654");
- template<typename T>
- T strtoval(const std::string& s)
- {
-     std::istringstream sstream(s);
-     T val;
-     sstream >> val;
-     return val;
- }
+//usage: std::string str = valtostr(25454.91654654f);
+template<typename T>
+std::string valtostr(const T& val)
+{
+  std::ostringstream sstream;
+  sstream << val;
+  return sstream.str();
+}
+
+//usage: double val = strtoval<double>("465498.654");
+template<typename T>
+T strtoval(const std::string& s)
+{
+  std::istringstream sstream(s);
+  T val;
+  sstream >> val;
+  return val;
+}
 
 //length is decimal precision of the floating point number
 template<typename T>
@@ -90,12 +117,12 @@ struct ColorRGB
   int r;
   int g;
   int b;
-  
+
   ColorRGB(Uint8 r, Uint8 g, Uint8 b);
   ColorRGB(const ColorRGB8bit& color);
   ColorRGB();
 };
-  
+
 ColorRGB operator+(const ColorRGB& color, const ColorRGB& color2);
 ColorRGB operator-(const ColorRGB& color, const ColorRGB& color2);
 ColorRGB operator*(const ColorRGB& color, int a);
@@ -127,12 +154,12 @@ struct ColorRGB8bit
   Uint8 r;
   Uint8 g;
   Uint8 b;
-  
+
   ColorRGB8bit(Uint8 r, Uint8 g, Uint8 b);
   ColorRGB8bit(const ColorRGB& color);
   ColorRGB8bit();
 };
-  
+
 //a color with 3 components: h, s and l
 struct ColorHSL
 {
@@ -150,7 +177,7 @@ struct ColorHSV
   int h;
   int s;
   int v;
-  
+
   ColorHSV(Uint8 h, Uint8 s, Uint8 v);
   ColorHSV();
 };
@@ -159,57 +186,57 @@ struct ColorHSV
 //GLOBAL VARIABLES//////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-extern int w;               // the width of the window
-extern int h;               // the height of the window
-extern SDL_Window*   win;
-extern SDL_Renderer* ren;
+extern int w;
+extern int h;
+extern SDL_Window* win;
 
 ////////////////////////////////////////////////////////////////////////////////
 //KEYBOARD FUNCTIONS////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-bool keyDown(SDL_Keycode key);  // checks if the key is held down, true as long as the key is held
-bool keyDown(SDL_Scancode key); // checks if the key is held down, true as long as the key is held
+bool keyDown(int key); //this checks if the key is held down, returns true all the time until the key is up
+bool keyPressed(int key); //this checks if the key is *just* pressed, returns true only once until the key is up again
 
 ////////////////////////////////////////////////////////////////////////////////
 //BASIC SCREEN FUNCTIONS////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-void screen(int width = 640, int height = 400, bool fullscreen = false, const std::string& text = " ");
-void redraw();                                              // Updates the visible display
-void cls(const ColorRGB& color = RGB_Black);                // Clears the screen to the given color
-void pset(int x, int y, const ColorRGB& color);             // Sets a single pixel color
-ColorRGB pget(int x, int y);                                // returns the pixel color 
-// if your writing to the buffer[x][y] in that order leave at false
-// if your using buffer[y][x] or buffer[y * width + x] set to true, true is 'faster' (i.e. takes better advantage of SDL2)
-void drawBuffer(Uint32* buffer, bool swapXY = false);       // Draws an array of (w * h) pixel data to the screen
-bool onScreen(int x, int y);                                // True if the given coords are inside the screen
+void screen(int width = 640, int height = 400, bool fullscreen = 0, const std::string& text = " ");
+void lock();
+void unlock();
+void redraw();
+void cls(const ColorRGB& color = RGB_Black);
+void pset(int x, int y, const ColorRGB& color);
+ColorRGB pget(int x, int y);
+void drawBuffer(Uint32* buffer);
+bool onScreen(int x, int y);
 
 ////////////////////////////////////////////////////////////////////////////////
 //NON GRAPHICAL FUNCTIONS///////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
 void sleep();
-void waitFrame(double oldTime, double frameDuration);       // frame duration in seconds
+void sleep(double seconds);
+void waitFrame(double oldTime, double frameDuration); //in seconds
 bool done(bool quit_if_esc = true, bool delay = true);
-void end();                                                 // quits the program
-void readKeys();                                            // gets the current state of the keyboard
-void getMouseState(int& mouseX, int& mouseY);               // sets arguments to the current location of the mouse
-void getMouseState(int& mouseX, int& mouseY, bool& LMB, bool& RMB); // sets left and right mouse button state
-inline unsigned long getTicks() { return SDL_GetTicks(); }  // milliseconds since SDL was initialised
-inline double getTime() { return SDL_GetTicks() / 1000.0; } // seconds since SDL was initialised
+void end();
+void readKeys();
+void getMouseState(int& mouseX, int& mouseY);
+void getMouseState(int& mouseX, int& mouseY, bool& LMB, bool& RMB);
+unsigned long getTicks(); //ticks in milliseconds
+inline double getTime() { return getTicks() / 1000.0; } //time in seconds
 
 ////////////////////////////////////////////////////////////////////////////////
 //2D SHAPES/////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-// TODO change return type to bool
-void horLine(int y, int x1, int x2, const ColorRGB& color); // draws a horizontal line
-void verLine(int x, int y1, int y2, const ColorRGB& color); // draws a verticle line
-void drawLine(int x1, int y1, int x2, int y2, const ColorRGB& color);   // endpoints (x1, y1) (x2, y2)
-bool drawCircle(int xc, int yc, int radius, const ColorRGB& color);     // circle outline at center (xc, yc)
-bool drawDisk(int xc, int yc, int radius, const ColorRGB& color);       // filled circle at center (xc, yc)
-void drawRect(int x1, int y1, int x2, int y2, const ColorRGB& color);   // corners   (x1, y1) (x2, y2)
+bool horLine(int y, int x1, int x2, const ColorRGB& color);
+bool verLine(int x, int y1, int y2, const ColorRGB& color);
+bool drawLine(int x1, int y1, int x2, int y2, const ColorRGB& color);
+bool drawCircle(int xc, int yc, int radius, const ColorRGB& color);
+bool drawDisk(int xc, int yc, int radius, const ColorRGB& color);
+bool drawRect(int x1, int y1, int x2, int y2, const ColorRGB& color);
+bool clipLine(int x1,int y1,int x2, int y2, int & x3, int & y3, int & x4, int & y4);
 
 ////////////////////////////////////////////////////////////////////////////////
 //COLOR CONVERSIONS/////////////////////////////////////////////////////////////
@@ -218,66 +245,31 @@ ColorHSL RGBtoHSL(const ColorRGB& colorRGB);
 ColorRGB HSLtoRGB(const ColorHSL& colorHSL);
 ColorHSV RGBtoHSV(const ColorRGB& colorRGB);
 ColorRGB HSVtoRGB(const ColorHSV& colorHSV);
-Uint32   RGBtoINT(const ColorRGB& colorRGB);
+Uint32 RGBtoINT(const ColorRGB& colorRGB);
 ColorRGB INTtoRGB(Uint32 colorINT);
 
-/*
 ////////////////////////////////////////////////////////////////////////////////
 //FILE FUNCTIONS////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-//TODO
-void loadFile(std::vector<unsigned char>& buffer, const std::string& filename) {}
-void saveFile(const std::vector<unsigned char>& buffer, const std::string& filename) {}
+void loadFile(std::vector<unsigned char>& buffer, const std::string& filename);
+void saveFile(const std::vector<unsigned char>& buffer, const std::string& filename);
 
 ////////////////////////////////////////////////////////////////////////////////
 //IMAGE FUNCTIONS///////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-//TODO
-int loadImage(std::vector<ColorRGB>& out,
-              unsigned long& w,
-              unsigned long& h,
-              const std::string& filename)
-{return 0;}
-int loadImage(std::vector<Uint32>& out,
-              unsigned long& w,
-              unsigned long& h,
-              const std::string& filename)
-{return 0;}
-int decodePNG(std::vector<unsigned char>& out_image_32bit,
-              unsigned long& image_width,
-              unsigned long& image_height,
-              const unsigned char* in_png,
-              unsigned long in_size)
-{return 0;}
-int decodePNG(std::vector<unsigned char>& out_image_32bit,
-              unsigned long& image_width,
-              unsigned long& image_height,
-              const std::vector<unsigned char>& in_png)
-{return 0;}
+int loadImage(std::vector<ColorRGB>& out, unsigned long& w, unsigned long& h, const std::string& filename);
+int loadImage(std::vector<Uint32>& out, unsigned long& w, unsigned long& h, const std::string& filename);
+int decodePNG(std::vector<unsigned char>& out_image, unsigned long& image_width, unsigned long& image_height, const unsigned char* in_png, size_t in_size, bool convert_to_rgba32 = true);
+int decodePNG(std::vector<unsigned char>& out_image_32bit, unsigned long& image_width, unsigned long& image_height, const std::vector<unsigned char>& in_png);
 
 ////////////////////////////////////////////////////////////////////////////////
 //TEXT FUNCTIONS////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-
-//TODO
 extern bool font[256][8][8];
-void drawLetter(unsigned char n,
-                int x,
-                int y,
-                const ColorRGB& color = RGB_White,
-                bool bg = 0,
-                const ColorRGB& color2 = RGB_Black)
-{}
-int printString(const std::string& text,
-                int x = 0,
-                int y = 0,
-                const ColorRGB& color = RGB_White,
-                bool bg = 0,
-                const ColorRGB& color2 = RGB_Black,
-                int forceLength = 0)
-{return 0;}
+void drawLetter(unsigned char n, int x, int y, const ColorRGB& color = RGB_White, bool bg = 0, const ColorRGB& color2 = RGB_Black);
+int printString(const std::string& text, int x = 0, int y = 0, const ColorRGB& color = RGB_White, bool bg = 0, const ColorRGB& color2 = RGB_Black, int forceLength = 0);
 
 //print something (string, int, float, ...)
 template<typename T>
@@ -289,14 +281,7 @@ int print(const T& val, int x = 0, int y = 0, const ColorRGB& color = RGB_White,
 
 //print some floating point number, this one allows printing floating point numbers with limited length
 template<typename T>
-int fprint(const T& val,
-        int length,
-        int x = 0,
-        int y = 0,
-        const ColorRGB& color = RGB_White,
-        bool bg = 0,
-        const ColorRGB& color2 = RGB_Black,
-        int forceLength = 0)
+int fprint(const T& val, int length, int x = 0, int y = 0, const ColorRGB& color = RGB_White, bool bg = 0, const ColorRGB& color2 = RGB_Black, int forceLength = 0)
 {
   std::string text = valtostr(val, length, true);
   return printString(text, x, y, color, bg, color2, forceLength);
@@ -305,27 +290,11 @@ int fprint(const T& val,
 ////////////////////////////////////////////////////////////////////////////////
 //TEXT INPUT FUNCTIONS//////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-
-//TODO
 Uint8 getInputCharacter();
-void getInputString(std::string& text,
-                    const std::string& message = "",
-                    bool clear = false,
-                    int x = 0,
-                    int y = 0,
-                    const ColorRGB& color = RGB_White,
-                    bool bg = 0,
-                    const ColorRGB& color2 = RGB_Black)
-{}
+void getInputString(std::string& text, const std::string& message = "", bool clear = false, int x = 0, int y = 0, const ColorRGB& color = RGB_White, bool bg = 0, const ColorRGB& color2 = RGB_Black);
 
 template<typename T>
-T getInput(const std::string& message = "",
-        bool clear = false,
-        int x = 0,
-        int y = 0,
-        const ColorRGB& color = RGB_White,
-        bool bg = 0,
-        const ColorRGB& color2 = RGB_Black)
+T getInput(const std::string& message = "", bool clear = false, int x = 0, int y = 0, const ColorRGB& color = RGB_White, bool bg = 0, const ColorRGB& color2 = RGB_Black)
 {
   std::string text;
   getInputString(text, message, clear, x, y, color, bg, color2);
@@ -336,29 +305,34 @@ T getInput(const std::string& message = "",
 //SOUNDCARD FUNCTIONS///////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-//TODO
-int audioOpen(int samplerate, int framesize) {return 0;} //always 16-bit mono sound for now; returns 0 if no error happened
-void audioClose() {}
-int audioReOpen() {return 0;} //closes and opens again with same parameters
+int audioOpen(int samplerate, int framesize); //always 16-bit mono sound for now; returns 0 if no error happened
+void audioClose();
+int audioReOpen(); //closes and opens again with same parameters
 
-//push samples to the soundcard, making sure not to cause shortage or overflow
-//pos and end are the range in the samples vector that you want to push to the audio card
-void audioPushSamples(const std::vector<double>& samples, size_t pos, size_t end) {}
-
-size_t audioSamplesShortage() {return 0;} //returns value > 0 if the soundcard is consuming more samples than you're producing
-size_t audioSamplesOverflow() {return 0;} //returns value > 0 if you're producing more samples than the soundard is consuming - so take it easy a bit
-void audioSetBufferSamplesRange(size_t min_samples, size_t max_samples) {} //set shortage and overflow values. E.g. 4096 and 8192.
-
-//This plays the sound starting at this time, until it's done
-//The difference with audioPushSamples is:
-//audioPlay allows playing multiple sounds at the same time: it doesn't push at the end,
-//but elementwise-adds or pushes back samples if needed.
-//The duration depends on samplerate, make sure the samples in the vector have the correct samplerate.
-void audioPlay(const std::vector<double>& samples) {}
-
-void audioSetMode(int mode) {} //0: silent, 1: full (no volume calculations ==> faster), 2: volume-controlled (= default value)
-void audioSetVolume(double volume) {} //multiplier used if mode is 2 (volume-controlled). Default value is 1.0.
+/*
+push samples to the soundcard, making sure not to cause shortage or overflow
+pos and end are the range in the samples vector that you want to push to the audio card
 */
-} // end of namespace InstantCG
+void audioPushSamples(const std::vector<double>& samples, size_t pos, size_t end);
+
+size_t audioSamplesShortage(); //returns value > 0 if the soundcard is consuming more samples than you're producing
+size_t audioSamplesOverflow(); //returns value > 0 if you're producing more samples than the soundard is consuming - so take it easy a bit
+void audioSetBufferSamplesRange(size_t min_samples, size_t max_samples); //set shortage and overflow values. E.g. 4096 and 8192.
+
+/*
+This plays the sound starting at this time, until it's done
+The difference with audioPushSamples is:
+audioPlay allows playing multiple sounds at the same time: it doesn't push at the end,
+but elementwise-adds or pushes back samples if needed.
+The duration depends on samplerate, make sure the samples in the vector have the correct samplerate.
+*/
+void audioPlay(const std::vector<double>& samples);
+
+void audioSetMode(int mode); //0: silent, 1: full (no volume calculations ==> faster), 2: volume-controlled (= default value)
+void audioSetVolume(double volume); //multiplier used if mode is 2 (volume-controlled). Default value is 1.0.
+
+} //end of namespace QuickCG
 
 #endif
+
+
