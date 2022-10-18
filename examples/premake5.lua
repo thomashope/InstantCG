@@ -43,6 +43,33 @@ local function AddProject(name)
             }
             optimize "On"
 
+        filter "action:xcode*"        
+
+
+            links {
+                "libs/sdl2/macos/SDL2.framework",    -- relative path to third party frameworks
+                "CoreFoundation.framework",                 -- no path needed for system frameworks
+                "OpenGL.framework",
+            }
+
+            sysincludedirs {
+                "libs/sdl2/macos/SDL2.framework/Headers",    -- need to explicitly add path to framework headers
+            }
+
+            frameworkdirs {
+                "libs/sdl2/macos/",  -- path to search for third party frameworks
+            }
+
+            embedAndSign {
+                "SDL2.framework",    -- bundle the framework into the built .app and sign with your certificate
+            }
+
+            xcodebuildsettings {
+                ["MACOSX_DEPLOYMENT_TARGET"] = "10.11",
+                ["CODE_SIGN_STYLE"] = "Automatic",
+                ["GENERATE_INFOPLIST_FILE"] = "YES",
+                ["LD_RUNPATH_SEARCH_PATHS"] = "$(inherited) @executable_path/../Frameworks", -- tell the executable where to find the frameworks. Path is relative to executable location inside .app bundle
+            }
 
         -- windows specific settings
         filter "action:vs*"
