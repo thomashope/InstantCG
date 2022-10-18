@@ -70,27 +70,35 @@ SDL_Event event = {0};
 //KEYBOARD FUNCTIONS////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-bool keyDown(int key) //this checks if the key is held down, returns true all the time until the key is up
+bool keyDown(SDL_Keycode key)
 {
-  if(!inkeys) return false;
-  SDL_Scancode scancode = SDL_GetScancodeFromKey(key);
-  return (inkeys[scancode] != 0);
+  return scancodeDown(SDL_GetScancodeFromKey(key));
 }
 
-bool keyPressed(int key) //this checks if the key is *just* pressed, returns true only once until the key is up again
+bool keyPressed(SDL_Keycode key)
+{
+  return scancodePressed(SDL_GetScancodeFromKey(key));
+}
+
+bool scancodeDown(SDL_Scancode key) //this checks if the key is held down, returns true all the time until the key is up
 {
   if(!inkeys) return false;
-  SDL_Scancode scancode = SDL_GetScancodeFromKey(key);
-  if(keypressed.find(scancode) == keypressed.end()) keypressed[scancode] = false;
-  if(inkeys[scancode])
+  return (inkeys[key] != 0);
+}
+
+bool scancodePressed(SDL_Scancode key) //this checks if the key is *just* pressed, returns true only once until the key is up again
+{
+  if(!inkeys) return false;
+  if(keypressed.find(key) == keypressed.end()) keypressed[key] = false;
+  if(inkeys[key])
   {
-    if(keypressed[scancode] == false)
+    if(keypressed[key] == false)
     {
-      keypressed[scancode] = true;
+      keypressed[key] = true;
       return true;
     }
   }
-  else keypressed[scancode] = false;
+  else keypressed[key] = false;
 
   return false;
 }

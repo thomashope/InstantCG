@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "instantcg.h"
 using namespace InstantCG;
 
@@ -17,15 +19,15 @@ int main(int argc, char** argv)
         horLine( mouseY, 0, w, RGB_White);
         verLine( mouseX, 0, h, RGB_White);
 
-        if( keyDown(SDL_SCANCODE_RIGHT) ) bg = RGB_Red;
-        if( keyDown(SDL_SCANCODE_LEFT ) ) bg = RGB_Green;
-        if( keyDown(SDL_SCANCODE_UP   ) ) bg = RGB_Blue;
-        if( keyDown(SDL_SCANCODE_DOWN ) ) bg = RGB_Black;
+        if( keyDown(SDLK_RIGHT) ) bg = RGB_Red;
+        if( keyDown(SDLK_LEFT ) ) bg = RGB_Green;
+        if( keyDown(SDLK_UP   ) ) bg = RGB_Blue;
+        if( keyDown(SDLK_DOWN ) ) bg = RGB_Black;
         if( LMB ) bg = RGB_Teal;
         if( RMB ) bg = RGB_Olive;
         if( RMB && LMB ) bg = RGB_Purple;
 
-        if( keyDown(SDL_SCANCODE_SPACE) )
+        if( keyDown(SDLK_SPACE) )
         {
             if( !lockCursor ) std::cout << "locking cursor" << std::endl;
             lockCursor = true;

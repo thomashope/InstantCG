@@ -98,6 +98,6 @@ end
 
 AddProject "hello_world"
 AddProject "fire"
--- AddProject "input"
+AddProject "input"
 AddProject "plasma"
 AddProject "noise"

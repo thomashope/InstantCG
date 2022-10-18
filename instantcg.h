@@ -194,8 +194,10 @@ extern SDL_Window* win;
 //KEYBOARD FUNCTIONS////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-bool keyDown(int key); //this checks if the key is held down, returns true all the time until the key is up
-bool keyPressed(int key); //this checks if the key is *just* pressed, returns true only once until the key is up again
+bool keyDown(SDL_Keycode key); //this checks if the key is held down, returns true all the time until the key is up
+bool keyPressed(SDL_Keycode key); //this checks if the key is *just* pressed, returns true only once until the key is up again
+bool scancodeDown(SDL_Scancode key);
+bool scancodePressed(SDL_Scancode key);
 
 ////////////////////////////////////////////////////////////////////////////////
 //BASIC SCREEN FUNCTIONS////////////////////////////////////////////////////////
