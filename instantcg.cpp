@@ -335,7 +335,7 @@ void getMouseState(int& mouseX, int& mouseY, bool& LMB, bool& RMB)
 //Returns the time in milliseconds since the program started
 unsigned long getTicks()
 {
-  return SDL_GetTicks();
+  return SDL_GetTicks64();
 }
 
 
